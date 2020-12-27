@@ -37,7 +37,6 @@ Rectangle m_rectangle = new Rectangle(0, 0, 0, 0);
         {
             InitializeComponent();
             INIT_SCREEN();
-            title.Text = (1087%22.5).ToString();
         }
 
         private void INIT_SCREEN()
