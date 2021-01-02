@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -22,13 +23,15 @@ namespace ImageProcessing
     }
     public partial class Form1 : Form
     {
+        bool IsMax = false;
+        private Size InitSize;
         bool AllTextFull = false;
         List<MyButton> RadioButtons = new List<MyButton>();
         Color PinkColor = Color.FromArgb(237, 25, 138);
         int XDivisionCoefission = 128;
         int YDivisionCoefission = 128;
         int multipleBy = 10;
-Rectangle m_rectangle = new Rectangle(0, 0, 0, 0);
+        Rectangle m_rectangle = new Rectangle(0, 0, 0, 0);
 
         Bitmap SourceBitmap, original;
         int[] coordinnates = {0,0,0,0};
@@ -41,7 +44,8 @@ Rectangle m_rectangle = new Rectangle(0, 0, 0, 0);
 
         private void INIT_SCREEN()
         {
-
+            
+            InitSize = this.Size;
             this.Text = string.Empty;
             this.ControlBox = false;
             this.MaximizedBounds = Screen.FromHandle(this.Handle).WorkingArea;
@@ -49,7 +53,7 @@ Rectangle m_rectangle = new Rectangle(0, 0, 0, 0);
             RadioButtons.Add(C2);
             RadioButtons.Add(C3);
             RadioButtons.Add(C4);
-            dragAndDropPanel.Location = new Point((pictureBox1.Width / 2) - (dragAndDropPanel.Width / 2), (pictureBox1.Height / 2) - (dragAndDropPanel.Height / 2));
+            uploadBtnPanel.Location = new Point((panel4.Width / 2) - (uploadBtnPanel.Width / 2), (panel4.Height / 2) - (uploadBtnPanel.Height / 2));
             ProgressBar.Width = 0;
             clearPb.BackColor = Color.Transparent;
             clearPb.Visible = false;
@@ -210,11 +214,12 @@ Rectangle m_rectangle = new Rectangle(0, 0, 0, 0);
             {
 
                 OpenFileDialog dialog = new OpenFileDialog();
-                dialog.Filter = "jpg files(*.jpg)|*.jpg| PNG files(*.png)|*.png| All Files(*.*)|*.*";
+                dialog.Filter = "jpg files(*.jpg)|*.jpg| PNG files(*.png)|*.png|JPEG files(*.jpeg)|*.jpeg";
                 if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     imageLocation = dialog.FileName;
-                    dragAndDropPanel.Visible = false;
+                    dragHerePanel.Visible = false;
+                    uploadBtnPanel.Visible = false;
                     clearPb.Visible = true;
 
                     SourceBitmap = Resizing(new Bitmap(imageLocation));
@@ -319,10 +324,25 @@ Rectangle m_rectangle = new Rectangle(0, 0, 0, 0);
 
         private void btnMaximize_Click(object sender, EventArgs e)
         {
-            if (WindowState == FormWindowState.Normal)
-                this.WindowState = FormWindowState.Maximized;
+            if (IsMax)
+            {
+
+                FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+                this.Size = InitSize;
+                this.Location = new Point((Screen.PrimaryScreen.Bounds.Size.Width / 2) - (this.Size.Width / 2), (Screen.PrimaryScreen.Bounds.Size.Height / 2) - (this.Size.Height / 2));
+
+                IsMax = false;
+            }
             else
-                this.WindowState = FormWindowState.Normal;
+            {
+
+                FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                Left = Top = 0;
+                Width = Screen.PrimaryScreen.WorkingArea.Width;
+                Height = Screen.PrimaryScreen.WorkingArea.Height;
+
+                IsMax = true;
+            }
         }
 
         private void bntMinimize_Click(object sender, EventArgs e)
@@ -384,7 +404,8 @@ Rectangle m_rectangle = new Rectangle(0, 0, 0, 0);
 
         private void pictureBox1_SizeChanged(object sender, EventArgs e)
         {
-            dragAndDropPanel.Location = new Point((pictureBox1.Width / 2) - (dragAndDropPanel.Width / 2) , (pictureBox1.Height / 2) - (dragAndDropPanel.Height / 2));
+            
+            uploadBtnPanel.Location = new Point((panel4.Width / 2) - (uploadBtnPanel.Width / 2) , (panel4.Height / 2) - (uploadBtnPanel.Height / 2));
             
         }
 
@@ -408,19 +429,52 @@ Rectangle m_rectangle = new Rectangle(0, 0, 0, 0);
 
         private void pictureBox1_DragDrop(object sender, DragEventArgs e)
         {
-            Bitmap image = (Bitmap)e.Data.GetData(DataFormats.FileDrop);
-            pictureBox1.Image = image;
+            var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if(files.Length > 0)
+            {
+                if(files.Length > 1)
+                {
+                    MessageBox.Show(this, "Only one file allowed", "HalfShield Exception", MessageBoxButtons.OK,
+                              MessageBoxIcon.Error);
+                }
+               
+                if (Path.GetExtension(files[0]) == ".png" || Path.GetExtension(files[0]) == ".jpg" || Path.GetExtension(files[0]) == ".jpeg")
+                {
+                    dragHerePanel.Visible = false;
+                    uploadBtnPanel.Visible = false;
+                    clearPb.Visible = true;
+
+                    SourceBitmap = Resizing(new Bitmap(files[0]));
+                    pictureBox1.Image = SourceBitmap;
+                    original = SourceBitmap;
+                    if (AllTextFull)
+                        myButton2.Enabled = true;
+                    SetTxtFocus();
+
+                }
+            }
+            dragHerePanel.Visible = false;
+            btnPanel.Visible = true;
         }
 
         private void pictureBox1_DragEnter(object sender, DragEventArgs e)
         {
-
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+                dragHerePanel.Visible = true;
+                btnPanel.Visible = false;
+            }
         }
 
         private void pictureBox1_DragLeave(object sender, EventArgs e)
         {
 
+            dragHerePanel.Visible = false;
+            btnPanel.Visible = true;
         }
+
+        
 
         private void clearPb_Click(object sender, EventArgs e)
         {
@@ -428,7 +482,7 @@ Rectangle m_rectangle = new Rectangle(0, 0, 0, 0);
             if(pictureBox1.Image != null)
             {
                 pictureBox1.Image = null;
-                dragAndDropPanel.Visible = true;
+                uploadBtnPanel.Visible = true;
                 clearPb.Visible = false;
             }
             myButton2.Enabled = false;

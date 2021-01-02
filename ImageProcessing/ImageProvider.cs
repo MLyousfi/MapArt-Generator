@@ -17,6 +17,7 @@ namespace ImageProcessing
 
         // field
         Color purpule = Color.FromArgb(9, 6, 33, 1);
+        Brush brush;
         Cursor zoomin = new Cursor(Application.StartupPath + "\\Cursors\\ZoomIn.ico");
         int[] coordinnates;
         int multipCoefficient;
@@ -30,6 +31,7 @@ namespace ImageProcessing
         public ImageProvider(Bitmap image,Bitmap original, int[] cor, int multipleBy , int xd , int yd)
         {
             InitializeComponent();
+            brush = new SolidBrush(purpule);
             coordinnates = cor;
             multipCoefficient = multipleBy;
             ResultImage.Image = image;
@@ -168,7 +170,7 @@ namespace ImageProcessing
         {
             if(!initSize.IsEmpty)
             {
-                ResultImage.Parent.BackColor = Color.Red;
+               
                 setPictureBoxSize();
                 CentreControlInGroupBox(ResultImage);
             }
@@ -338,7 +340,7 @@ namespace ImageProcessing
 
         private void ResultImage_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.FillEllipse(new SolidBrush(Color.RoyalBlue), HilightRect);
+            e.Graphics.FillRectangle(brush, HilightRect);
         }
 
         private void ImageProvider_KeyUp(object sender, KeyEventArgs e)

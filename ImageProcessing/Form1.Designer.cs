@@ -44,11 +44,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.clearPb = new System.Windows.Forms.PictureBox();
-            this.dragAndDropPanel = new System.Windows.Forms.Panel();
-            this.label12 = new System.Windows.Forms.Label();
+            this.dragHerePanel = new System.Windows.Forms.Label();
+            this.uploadBtnPanel = new System.Windows.Forms.Panel();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.ProgressBar = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.btnPanel = new System.Windows.Forms.Panel();
             this.myButton1 = new ImageProcessing.MyButton();
             this.myButton2 = new ImageProcessing.MyButton();
             this.C4 = new ImageProcessing.MyButton();
@@ -80,9 +83,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clearPb)).BeginInit();
-            this.dragAndDropPanel.SuspendLayout();
+            this.uploadBtnPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel4.SuspendLayout();
+            this.btnPanel.SuspendLayout();
             this.roundedPanel3.SuspendLayout();
             this.roundedPanel4.SuspendLayout();
             this.roundedPanel2.SuspendLayout();
@@ -283,8 +288,8 @@
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(6)))), ((int)(((byte)(33)))));
             this.panel3.BackgroundImage = global::ImageProcessing.Properties.Resources.bordeDashed;
             this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.panel3.Controls.Add(this.panel4);
             this.panel3.Controls.Add(this.clearPb);
-            this.panel3.Controls.Add(this.dragAndDropPanel);
             this.panel3.Controls.Add(this.pictureBox1);
             this.panel3.Location = new System.Drawing.Point(432, 50);
             this.panel3.Margin = new System.Windows.Forms.Padding(0);
@@ -305,43 +310,51 @@
             this.clearPb.TabStop = false;
             this.clearPb.Click += new System.EventHandler(this.clearPb_Click);
             // 
-            // dragAndDropPanel
+            // dragHerePanel
             // 
-            this.dragAndDropPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dragAndDropPanel.BackColor = System.Drawing.Color.Transparent;
-            this.dragAndDropPanel.Controls.Add(this.label12);
-            this.dragAndDropPanel.Controls.Add(this.pictureBox4);
-            this.dragAndDropPanel.Controls.Add(this.myButton1);
-            this.dragAndDropPanel.Location = new System.Drawing.Point(369, 135);
-            this.dragAndDropPanel.Margin = new System.Windows.Forms.Padding(4);
-            this.dragAndDropPanel.Name = "dragAndDropPanel";
-            this.dragAndDropPanel.Size = new System.Drawing.Size(387, 384);
-            this.dragAndDropPanel.TabIndex = 20;
+            this.dragHerePanel.AutoSize = true;
+            this.dragHerePanel.Font = new System.Drawing.Font("Montserrat Black", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dragHerePanel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(237)))), ((int)(((byte)(25)))), ((int)(((byte)(138)))));
+            this.dragHerePanel.Location = new System.Drawing.Point(128, 180);
+            this.dragHerePanel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.dragHerePanel.Name = "dragHerePanel";
+            this.dragHerePanel.Size = new System.Drawing.Size(184, 41);
+            this.dragHerePanel.TabIndex = 22;
+            this.dragHerePanel.Text = "Drag Here";
+            this.dragHerePanel.Visible = false;
             // 
-            // label12
+            // uploadBtnPanel
             // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Montserrat Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.ForeColor = System.Drawing.Color.White;
-            this.label12.Location = new System.Drawing.Point(23, 204);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(327, 27);
-            this.label12.TabIndex = 22;
-            this.label12.Text = "Drag and drop image here or";
+            this.uploadBtnPanel.Controls.Add(this.dragHerePanel);
+            this.uploadBtnPanel.Controls.Add(this.btnPanel);
+            this.uploadBtnPanel.Controls.Add(this.pictureBox4);
+            this.uploadBtnPanel.Location = new System.Drawing.Point(293, 105);
+            this.uploadBtnPanel.Name = "uploadBtnPanel";
+            this.uploadBtnPanel.Size = new System.Drawing.Size(413, 365);
+            this.uploadBtnPanel.TabIndex = 23;
             // 
             // pictureBox4
             // 
             this.pictureBox4.Image = global::ImageProcessing.Properties.Resources.dragAndDropIcon;
-            this.pictureBox4.Location = new System.Drawing.Point(100, 52);
+            this.pictureBox4.Location = new System.Drawing.Point(119, 47);
             this.pictureBox4.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(195, 116);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox4.TabIndex = 20;
             this.pictureBox4.TabStop = false;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Montserrat Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.Color.White;
+            this.label12.Location = new System.Drawing.Point(51, 18);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(327, 27);
+            this.label12.TabIndex = 22;
+            this.label12.Text = "Drag and drop image here or";
             // 
             // pictureBox1
             // 
@@ -357,11 +370,7 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.SizeChanged += new System.EventHandler(this.pictureBox1_SizeChanged);
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
-            this.pictureBox1.DragDrop += new System.Windows.Forms.DragEventHandler(this.pictureBox1_DragDrop);
-            this.pictureBox1.DragEnter += new System.Windows.Forms.DragEventHandler(this.pictureBox1_DragEnter);
-            this.pictureBox1.DragLeave += new System.EventHandler(this.pictureBox1_DragLeave);
             // 
             // ProgressBar
             // 
@@ -373,6 +382,32 @@
             this.ProgressBar.Size = new System.Drawing.Size(124, 12);
             this.ProgressBar.TabIndex = 2;
             // 
+            // panel4
+            // 
+            this.panel4.AllowDrop = true;
+            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(6)))), ((int)(((byte)(33)))));
+            this.panel4.Controls.Add(this.uploadBtnPanel);
+            this.panel4.Location = new System.Drawing.Point(48, 51);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(1007, 601);
+            this.panel4.TabIndex = 24;
+            this.panel4.SizeChanged += new System.EventHandler(this.pictureBox1_SizeChanged);
+            this.panel4.DragDrop += new System.Windows.Forms.DragEventHandler(this.pictureBox1_DragDrop);
+            this.panel4.DragEnter += new System.Windows.Forms.DragEventHandler(this.pictureBox1_DragEnter);
+            this.panel4.DragLeave += new System.EventHandler(this.pictureBox1_DragLeave);
+            // 
+            // btnPanel
+            // 
+            this.btnPanel.Controls.Add(this.label12);
+            this.btnPanel.Controls.Add(this.myButton1);
+            this.btnPanel.Location = new System.Drawing.Point(3, 199);
+            this.btnPanel.Name = "btnPanel";
+            this.btnPanel.Size = new System.Drawing.Size(407, 163);
+            this.btnPanel.TabIndex = 23;
+            // 
             // myButton1
             // 
             this.myButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(237)))), ((int)(((byte)(25)))), ((int)(((byte)(138)))));
@@ -380,7 +415,7 @@
             this.myButton1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.myButton1.Font = new System.Drawing.Font("Montserrat", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.myButton1.ForeColor = System.Drawing.Color.White;
-            this.myButton1.Location = new System.Drawing.Point(88, 260);
+            this.myButton1.Location = new System.Drawing.Point(116, 61);
             this.myButton1.Margin = new System.Windows.Forms.Padding(4);
             this.myButton1.Name = "myButton1";
             this.myButton1.RoundCorners = ((ImageProcessing.Corners)((((ImageProcessing.Corners.TopLeft | ImageProcessing.Corners.TopRight) 
@@ -712,10 +747,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.clearPb)).EndInit();
-            this.dragAndDropPanel.ResumeLayout(false);
-            this.dragAndDropPanel.PerformLayout();
+            this.uploadBtnPanel.ResumeLayout(false);
+            this.uploadBtnPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel4.ResumeLayout(false);
+            this.btnPanel.ResumeLayout(false);
+            this.btnPanel.PerformLayout();
             this.roundedPanel3.ResumeLayout(false);
             this.roundedPanel3.PerformLayout();
             this.roundedPanel4.ResumeLayout(false);
@@ -767,11 +805,14 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private MyButton myButton2;
         private MyButton myButton1;
-        private System.Windows.Forms.Panel dragAndDropPanel;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.PictureBox clearPb;
         private System.Windows.Forms.Panel ProgressBar;
+        private System.Windows.Forms.Panel uploadBtnPanel;
+        private System.Windows.Forms.Label dragHerePanel;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel btnPanel;
     }
 }
 
