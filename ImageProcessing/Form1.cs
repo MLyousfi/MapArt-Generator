@@ -218,8 +218,10 @@ namespace ImageProcessing
                 if(dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     imageLocation = dialog.FileName;
-                    dragHerePanel.Visible = false;
-                    uploadBtnPanel.Visible = false;
+
+                    panel4.Visible = false;
+                    //dragHerePanel.Visible = false;
+                    //uploadBtnPanel.Visible = false;
                     clearPb.Visible = true;
 
                     SourceBitmap = Resizing(new Bitmap(imageLocation));
@@ -440,8 +442,9 @@ namespace ImageProcessing
                
                 if (Path.GetExtension(files[0]) == ".png" || Path.GetExtension(files[0]) == ".jpg" || Path.GetExtension(files[0]) == ".jpeg")
                 {
-                    dragHerePanel.Visible = false;
-                    uploadBtnPanel.Visible = false;
+                    panel4.Visible = false;
+                    //dragHerePanel.Visible = false;
+                    //uploadBtnPanel.Visible = false;
                     clearPb.Visible = true;
 
                     SourceBitmap = Resizing(new Bitmap(files[0]));
@@ -482,7 +485,7 @@ namespace ImageProcessing
             if(pictureBox1.Image != null)
             {
                 pictureBox1.Image = null;
-                uploadBtnPanel.Visible = true;
+                panel4.Visible = true;
                 clearPb.Visible = false;
             }
             myButton2.Enabled = false;

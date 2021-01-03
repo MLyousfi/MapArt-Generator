@@ -43,15 +43,15 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.clearPb = new System.Windows.Forms.PictureBox();
-            this.dragHerePanel = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.uploadBtnPanel = new System.Windows.Forms.Panel();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.dragHerePanel = new System.Windows.Forms.Label();
+            this.btnPanel = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.clearPb = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.ProgressBar = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.btnPanel = new System.Windows.Forms.Panel();
             this.myButton1 = new ImageProcessing.MyButton();
             this.myButton2 = new ImageProcessing.MyButton();
             this.C4 = new ImageProcessing.MyButton();
@@ -82,12 +82,12 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.clearPb)).BeginInit();
-            this.uploadBtnPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel4.SuspendLayout();
+            this.uploadBtnPanel.SuspendLayout();
             this.btnPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.clearPb)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.roundedPanel3.SuspendLayout();
             this.roundedPanel4.SuspendLayout();
             this.roundedPanel2.SuspendLayout();
@@ -286,7 +286,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel3.AutoScroll = true;
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(6)))), ((int)(((byte)(33)))));
-            this.panel3.BackgroundImage = global::ImageProcessing.Properties.Resources.bordeDashed;
             this.panel3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel3.Controls.Add(this.panel4);
             this.panel3.Controls.Add(this.clearPb);
@@ -297,18 +296,32 @@
             this.panel3.Size = new System.Drawing.Size(1108, 711);
             this.panel3.TabIndex = 17;
             // 
-            // clearPb
+            // panel4
             // 
-            this.clearPb.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.clearPb.Image = global::ImageProcessing.Properties.Resources.clearPb;
-            this.clearPb.Location = new System.Drawing.Point(11, 16);
-            this.clearPb.Margin = new System.Windows.Forms.Padding(4);
-            this.clearPb.Name = "clearPb";
-            this.clearPb.Size = new System.Drawing.Size(40, 37);
-            this.clearPb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.clearPb.TabIndex = 21;
-            this.clearPb.TabStop = false;
-            this.clearPb.Click += new System.EventHandler(this.clearPb_Click);
+            this.panel4.AllowDrop = true;
+            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(6)))), ((int)(((byte)(33)))));
+            this.panel4.Controls.Add(this.uploadBtnPanel);
+            this.panel4.Location = new System.Drawing.Point(48, 51);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(1007, 601);
+            this.panel4.TabIndex = 24;
+            this.panel4.SizeChanged += new System.EventHandler(this.pictureBox1_SizeChanged);
+            this.panel4.DragDrop += new System.Windows.Forms.DragEventHandler(this.pictureBox1_DragDrop);
+            this.panel4.DragEnter += new System.Windows.Forms.DragEventHandler(this.pictureBox1_DragEnter);
+            this.panel4.DragLeave += new System.EventHandler(this.pictureBox1_DragLeave);
+            // 
+            // uploadBtnPanel
+            // 
+            this.uploadBtnPanel.Controls.Add(this.dragHerePanel);
+            this.uploadBtnPanel.Controls.Add(this.btnPanel);
+            this.uploadBtnPanel.Controls.Add(this.pictureBox4);
+            this.uploadBtnPanel.Location = new System.Drawing.Point(293, 105);
+            this.uploadBtnPanel.Name = "uploadBtnPanel";
+            this.uploadBtnPanel.Size = new System.Drawing.Size(413, 365);
+            this.uploadBtnPanel.TabIndex = 23;
             // 
             // dragHerePanel
             // 
@@ -323,26 +336,14 @@
             this.dragHerePanel.Text = "Drag Here";
             this.dragHerePanel.Visible = false;
             // 
-            // uploadBtnPanel
+            // btnPanel
             // 
-            this.uploadBtnPanel.Controls.Add(this.dragHerePanel);
-            this.uploadBtnPanel.Controls.Add(this.btnPanel);
-            this.uploadBtnPanel.Controls.Add(this.pictureBox4);
-            this.uploadBtnPanel.Location = new System.Drawing.Point(293, 105);
-            this.uploadBtnPanel.Name = "uploadBtnPanel";
-            this.uploadBtnPanel.Size = new System.Drawing.Size(413, 365);
-            this.uploadBtnPanel.TabIndex = 23;
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Image = global::ImageProcessing.Properties.Resources.dragAndDropIcon;
-            this.pictureBox4.Location = new System.Drawing.Point(119, 47);
-            this.pictureBox4.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(195, 116);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox4.TabIndex = 20;
-            this.pictureBox4.TabStop = false;
+            this.btnPanel.Controls.Add(this.label12);
+            this.btnPanel.Controls.Add(this.myButton1);
+            this.btnPanel.Location = new System.Drawing.Point(3, 199);
+            this.btnPanel.Name = "btnPanel";
+            this.btnPanel.Size = new System.Drawing.Size(407, 163);
+            this.btnPanel.TabIndex = 23;
             // 
             // label12
             // 
@@ -355,6 +356,30 @@
             this.label12.Size = new System.Drawing.Size(327, 27);
             this.label12.TabIndex = 22;
             this.label12.Text = "Drag and drop image here or";
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Image = global::ImageProcessing.Properties.Resources.dragAndDropIcon;
+            this.pictureBox4.Location = new System.Drawing.Point(119, 47);
+            this.pictureBox4.Margin = new System.Windows.Forms.Padding(4);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(195, 116);
+            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox4.TabIndex = 20;
+            this.pictureBox4.TabStop = false;
+            // 
+            // clearPb
+            // 
+            this.clearPb.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.clearPb.Image = global::ImageProcessing.Properties.Resources.clearPb;
+            this.clearPb.Location = new System.Drawing.Point(11, 16);
+            this.clearPb.Margin = new System.Windows.Forms.Padding(4);
+            this.clearPb.Name = "clearPb";
+            this.clearPb.Size = new System.Drawing.Size(40, 37);
+            this.clearPb.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.clearPb.TabIndex = 21;
+            this.clearPb.TabStop = false;
+            this.clearPb.Click += new System.EventHandler(this.clearPb_Click);
             // 
             // pictureBox1
             // 
@@ -381,32 +406,6 @@
             this.ProgressBar.Name = "ProgressBar";
             this.ProgressBar.Size = new System.Drawing.Size(124, 12);
             this.ProgressBar.TabIndex = 2;
-            // 
-            // panel4
-            // 
-            this.panel4.AllowDrop = true;
-            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(9)))), ((int)(((byte)(6)))), ((int)(((byte)(33)))));
-            this.panel4.Controls.Add(this.uploadBtnPanel);
-            this.panel4.Location = new System.Drawing.Point(48, 51);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1007, 601);
-            this.panel4.TabIndex = 24;
-            this.panel4.SizeChanged += new System.EventHandler(this.pictureBox1_SizeChanged);
-            this.panel4.DragDrop += new System.Windows.Forms.DragEventHandler(this.pictureBox1_DragDrop);
-            this.panel4.DragEnter += new System.Windows.Forms.DragEventHandler(this.pictureBox1_DragEnter);
-            this.panel4.DragLeave += new System.EventHandler(this.pictureBox1_DragLeave);
-            // 
-            // btnPanel
-            // 
-            this.btnPanel.Controls.Add(this.label12);
-            this.btnPanel.Controls.Add(this.myButton1);
-            this.btnPanel.Location = new System.Drawing.Point(3, 199);
-            this.btnPanel.Name = "btnPanel";
-            this.btnPanel.Size = new System.Drawing.Size(407, 163);
-            this.btnPanel.TabIndex = 23;
             // 
             // myButton1
             // 
@@ -746,14 +745,14 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.clearPb)).EndInit();
+            this.panel4.ResumeLayout(false);
             this.uploadBtnPanel.ResumeLayout(false);
             this.uploadBtnPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.panel4.ResumeLayout(false);
             this.btnPanel.ResumeLayout(false);
             this.btnPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.clearPb)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.roundedPanel3.ResumeLayout(false);
             this.roundedPanel3.PerformLayout();
             this.roundedPanel4.ResumeLayout(false);
