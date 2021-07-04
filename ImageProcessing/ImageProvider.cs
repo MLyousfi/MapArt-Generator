@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ImageProcessing.ImageProcessingFunction;
 
 using System.Drawing.Drawing2D;
 
@@ -19,19 +20,23 @@ namespace ImageProcessing
         Color purpule = Color.FromArgb(9, 6, 33, 1);
         Brush brush;
         Cursor zoomin = new Cursor(Application.StartupPath + "\\Cursors\\ZoomIn.ico");
+        private readonly Bitmap image;
+        private readonly Bitmap original;
         int[] coordinnates;
         int multipCoefficient;
         int XD, YD;
+        private readonly Color[,] imageColors;
         RectangleF HilightRect = new RectangleF(0, 0, 0, 0);
         Size parentSize;
         Size initSize;
-
         Size MinSize, MaxSize;
 
-        public ImageProvider(Bitmap image,Bitmap original, int[] cor, int multipleBy , int xd , int yd)
+        public ImageProvider(Bitmap image,Bitmap original, int[] cor, int multipleBy , int xd , int yd,Color[,] imageColors)
         {
             InitializeComponent();
             brush = new SolidBrush(purpule);
+            this.image = image;
+            this.original = original;
             coordinnates = cor;
             multipCoefficient = multipleBy;
             ResultImage.Image = image;
@@ -43,6 +48,7 @@ namespace ImageProcessing
             //MessageBox.Show(ResultImage.Width.ToString() + " " + ResultImage.Height.ToString());
             XD = xd;
             YD = yd;
+            this.imageColors = imageColors;
             INIT_SCREEN();
         }
         private void INIT_SCREEN()
@@ -108,7 +114,7 @@ namespace ImageProcessing
         
        
         Point point;
-        int x, y , previousX, previousY;
+        int x, y ;
         private void ResultImage_MouseDown(object sender, MouseEventArgs me)
         {
             
@@ -151,7 +157,16 @@ namespace ImageProcessing
                             y = coordinnates[1] - (b.Height / multipCoefficient) * me.Y / ResultImage.Height;
                         }
                     }
-                    MessageBox.Show(ResultImage.Size + " /// " + coordinnates[0] + " - (" + b.Width + " / " + multipCoefficient + ") * " + me.X + " / " + ResultImage.Width + " = " + String.Format("X={0}, Y={1}", x, y));
+                    //coore
+                    //MessageBox.Show(ResultImage.Size.Width / XD * x + " // " + ResultImage.Size.Height / YD * y + " // " + (float)ResultImage.Size.Width / XD + " // " + (float)ResultImage.Size.Height / YD);
+
+                    //MessageBox.Show(ResultImage.Size + " /// " + coordinnates[0] + " - (" + b.Width + " / " + multipCoefficient + ") * " + me.X + " / " + ResultImage.Width + " = " + String.Format("X={0}, Y={1}", x, y));
+                    this.Xvalue.Text = x.ToString();
+                    this.Yvalue.Text = y.ToString();
+
+                    pickedColor = imageColors[x - 1, y - 1];
+                    pickedcolorpanel.Invalidate();
+                    proposedcolorpanel.Invalidate();
 
                 }
 
@@ -225,7 +240,7 @@ namespace ImageProcessing
 
         private void ResultImage_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-           MessageBox.Show(e.KeyCode.ToString());
+           
            
         }
 
@@ -241,35 +256,18 @@ namespace ImageProcessing
             else if (ResultImage.Bounds.Y < (ResultImage.Parent.Bounds.Height - ResultImage.Bounds.Height)) ResultImage.Bounds = new Rectangle(ResultImage.Bounds.X , (ResultImage.Parent.Bounds.Height - ResultImage.Bounds.Height), ResultImage.Bounds.Width, ResultImage.Bounds.Height);
 
         }
-        float lastx, lasty;
-        float myY = 0, myX = 0;
+        int myY = 0, myX = 0;
         private void ResultImage_MouseMove(object sender, MouseEventArgs me)
         {
             //HilightRect.Location = new Point(me.Location.X - (HilightRect.Width / 2), me.Location.Y - (HilightRect.Height / 2));
-            float height = (float)Decimal.Divide(ResultImage.Width, XD);
-            float width = (float)Decimal.Divide(ResultImage.Height, YD);
-            float myX = ((float)Decimal.Divide(me.Location.X, (decimal)Decimal.Divide(ResultImage.Width, XD)) * (float)Decimal.Divide(ResultImage.Width, XD)) - (float)Decimal.Divide((decimal)width, 2);
-            float myY = ((float)Decimal.Divide(me.Location.Y, (decimal)Decimal.Divide(ResultImage.Height, YD)) * (float)Decimal.Divide(ResultImage.Height, YD)) - (float)Decimal.Divide((decimal)height, 2);
+            float width = (float)ResultImage.Size.Width / XD;
+            float height = (float)ResultImage.Size.Height / YD;
             
-            HilightRect = new RectangleF(myX, myY, height,width);
-            coor.Text = me.Location.ToString() + "\n  ((" +  me.Location.X + " / (" + ResultImage.Width +"/"+ XD+")) * -->" + (float)Decimal.Divide(ResultImage.Width, XD) +" \n " + (float)Decimal.Divide(me.Location.X, (decimal)Decimal.Divide(ResultImage.Width, XD)) * (float)Decimal.Divide(ResultImage.Width, XD);
-
-            if (HilightRect.Right > ResultImage.Width)
-            {
-                HilightRect.X = ResultImage.Width - HilightRect.Width;
-            }
-            if (HilightRect.Top < 0)
-            {
-                HilightRect.Y = 0;
-            }
-            if (HilightRect.Left < 0)
-            {
-                HilightRect.X = 0;
-            }
-            if (HilightRect.Bottom > ResultImage.Height)
-            {
-                HilightRect.Y = ResultImage.Height - HilightRect.Height;
-            }
+            //label1.Text = me.Location.ToString() + "\n  ((" +  me.Location.X + " / (" + ResultImage.Width +"/"+ XD+")) * -->" + (float)Decimal.Divide(ResultImage.Width, XD) +" \n " + (float)Decimal.Divide(me.Location.X, (decimal)Decimal.Divide(ResultImage.Width, XD)) * (float)Decimal.Divide(ResultImage.Width, XD);
+            myX = (int)(me.Location.X / width) + 1;
+            myY = (int)(me.Location.Y / height) + 1;
+            
+            
             ResultImage.Invalidate();
             
 
@@ -294,21 +292,10 @@ namespace ImageProcessing
                 this.WindowState = FormWindowState.Normal;
         }
 
-        private void ImageProvider_Load(object sender, EventArgs e)
-        {
+        
 
-        }
 
-        private void ImageProvider_KeyDown(object sender, KeyEventArgs e) 
-        {
-           
-            if (e.KeyCode == Keys.Menu &&  this.ResultImage.Bounds.Contains(this.PointToClient(Cursor.Position)))
-            {
-                ResultImage.Cursor = zoomin;
-                
-
-            }
-        }
+        
 
         
 
@@ -318,29 +305,107 @@ namespace ImageProcessing
             return;
             if (this.ResultImage.Bounds.Contains(this.PointToClient(Cursor.Position)))
             {
-                coor.Text = "cursor in";
+               // coor.Text = "cursor in";
             }
             else
             {
-                coor.Text = "cursor out";
+                //coor.Text = "cursor out";
             }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void ResultImage_MouseEnter(object sender, EventArgs e)
         {
-            coor.Text = "cursor in";
+            //coor.Text = "cursor in";
         }
 
-        
+        private void ImageProvider_KeyDown(object sender, KeyEventArgs e)
+        {
+            Console.Write("heeeeere" ,e.KeyValue.ToString());
+            if (e.KeyCode == Keys.Enter)
+            {
+                Console.Write("uuuuuup");
+                Xvalue.Text = (x + 1).ToString();
+            }
+        }
+
+        private void ImageProvider_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            
+        }
+
+        Color pickedColor;
+        private void panel5_Paint(object sender, PaintEventArgs e)
+        {
+            int w = panel5.Width;
+            int h = panel5.Height;
+            int index = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    
+                    SolidBrush brush = new SolidBrush(Constants.mineCraftColor[index++]);
+                    Rectangle rect = new Rectangle((w / 4) * i,
+                        (h / 3) * j,
+                        w / 4,
+                        h / 3);
+                    e.Graphics.FillRectangle(brush, rect);
+
+                }
+            }
+
+            //int index = function.FindNearestColor(Constants.mineCraftColor, pickedColor);
+
+            //Brush color = new SolidBrush(Constants.mineCraftColor[index]);
+            //e.Graphics.FillRectangle(color,0,0, panel5.Width, panel5.Height);
+
+        }
+
+        private void groupBox4_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pickedcolorpanel_Paint(object sender, PaintEventArgs e)
+        {
+            Brush color = new SolidBrush(pickedColor);
+            e.Graphics.FillRectangle(color,0,0, pickedcolorpanel.Width, pickedcolorpanel.Height);
+        }
+
+        private void proposedcolorpanel_Paint(object sender, PaintEventArgs e)
+        {
+            int index = function.FindNearestColor(Constants.mineCraftColor, pickedColor);
+
+            Brush color = new SolidBrush(Constants.mineCraftColor[index]);
+            e.Graphics.FillRectangle(color, 0, 0, proposedcolorpanel.Width, proposedcolorpanel.Height);
+        }
 
         private void ResultImage_MouseLeave(object sender, EventArgs e)
         {
-            coor.Text = "cursor out";
+            //coor.Text = "cursor out";
         }
 
         private void ResultImage_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(brush, HilightRect);
+            //e.Graphics.FillRectangle(brush, HilightRect);
+
+            Brush red = new SolidBrush(Color.Red);
+            Brush black = new SolidBrush(Color.FromArgb(100, (byte)0, (byte)255, (byte)0));
+            Pen redPen = new Pen(red, 1);
+            Pen blackPen = new Pen(black, 1);
+            float w = (float)ResultImage.Size.Width / XD;
+            float h = (float)ResultImage.Size.Height / YD;
+            
+            e.Graphics.FillRectangle(black, w*(myX-1),h*(myY-1),w,h );
+            e.Graphics.DrawRectangle(redPen, w*(x-1),h*(y-1),w,h );
+            
+            
+
         }
 
         private void ImageProvider_KeyUp(object sender, KeyEventArgs e)

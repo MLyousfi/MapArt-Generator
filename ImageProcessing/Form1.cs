@@ -34,7 +34,9 @@ namespace ImageProcessing
         Rectangle m_rectangle = new Rectangle(0, 0, 0, 0);
 
         Bitmap SourceBitmap, original;
-        int[] coordinnates = {0,0,0,0};
+        int[] coordinnates = { 0, 0, 0, 0 };
+
+        Color[,] imageColors;
 
         public Form1()
         {
@@ -94,12 +96,11 @@ namespace ImageProcessing
 
        
 
-        void resetProgressBar()
-        {
-        }
+        
 
         public Task ProcessData(Bitmap image , IProgress<PrigressReport> progress)
         {
+            
             int pictureBoxWidth = XDivisionCoefission* multipleBy;
             int pictureBoxHeight = YDivisionCoefission * multipleBy;
             Bitmap bm = new Bitmap(pictureBoxWidth, pictureBoxHeight);
@@ -107,7 +108,7 @@ namespace ImageProcessing
             
             int index = 1;
             var progressReport = new PrigressReport();
-            
+            imageColors = new Color[XDivisionCoefission, YDivisionCoefission];
                 return Task.Run(() =>
                 {
                     using (Graphics gr = Graphics.FromImage(bm))
@@ -126,6 +127,7 @@ namespace ImageProcessing
                                                     image.Width / XDivisionCoefission,
                                                     image.Height / YDivisionCoefission);
 
+                                imageColors[i,j] = PixelColor;
 
                                 SolidBrush brush = new SolidBrush(PixelColor);
                                 Rectangle rect = new Rectangle((pictureBoxWidth / XDivisionCoefission) * i,
@@ -285,7 +287,7 @@ namespace ImageProcessing
                 ProgressBar.Width = 0;
                 //loadingPanel.Visible = false;
 
-                ImageProvider imageProvider = new ImageProvider(SourceBitmap,original , coordinnates, multipleBy , XDivisionCoefission, YDivisionCoefission);
+                ImageProvider imageProvider = new ImageProvider(SourceBitmap,original , coordinnates, multipleBy , XDivisionCoefission, YDivisionCoefission,imageColors);
                 imageProvider.Show();
             }else
             {
